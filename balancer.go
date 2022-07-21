@@ -1,12 +1,19 @@
 // Package balancer provide easy round-robin balancer.
 package balancer
 
-import "sync/atomic"
+import (
+	"strings"
+	"sync/atomic"
+)
 
 func New(hosts []string) *Balancer {
 	return &Balancer{
 		hosts: hosts,
 	}
+}
+
+func NewSplit(hosts, delimiter string) *Balancer {
+	return New(strings.Split(hosts, delimiter))
 }
 
 func (b *Balancer) GetHost() string {
